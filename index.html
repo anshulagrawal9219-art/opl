@@ -156,8 +156,8 @@
   .search svg{color:var(--muted);flex-shrink:0}
   .search input{border:0;outline:0;background:transparent;font:inherit;font-weight:600;color:var(--ink);width:100%;min-height:48px}
   .search input::placeholder{color:var(--muted)}
-  .voice-btn{flex-shrink:0;width:40px;height:40px;min-height:40px;border:0;background:transparent;border-radius:50%;display:grid;place-items:center;color:var(--muted);padding:0;margin-right:-6px}
-  .voice-btn:hover{background:var(--blue-soft);color:var(--blue)}
+  .voice-btn{flex-shrink:0;width:40px;height:40px;min-height:40px;border:1px solid var(--line-strong);background:var(--blue-soft);border-radius:50%;display:grid;place-items:center;color:var(--blue);padding:0;margin-right:-6px;cursor:pointer}
+  .voice-btn:hover{background:#CFE3FF;color:var(--blue)}
   .voice-btn:focus-visible{outline:2px solid var(--blue);outline-offset:2px}
   .voice-btn.listening{background:#FFE9F1;color:var(--pink);animation:voicePulse 1.2s ease-in-out infinite}
   @keyframes voicePulse{0%,100%{box-shadow:0 0 0 0 rgba(232,62,126,.35)}50%{box-shadow:0 0 0 7px rgba(232,62,126,0)}}
@@ -278,6 +278,23 @@
   /* My Orders */
   .orders-count{position:absolute;top:-7px;right:-7px;min-width:22px;height:22px;padding:0 5px;border-radius:99px;background:var(--blue);color:#fff;font-size:.72rem;font-weight:800;display:grid;place-items:center;border:2px solid var(--bg)}
   .orders-count.hidden{display:none}
+  /* Login */
+  .login-btn{display:inline-flex;align-items:center;gap:8px;border:1px solid var(--line-strong);background:var(--surface);color:var(--ink);border-radius:12px;padding:0 14px;font-weight:800;font-size:.92rem;min-height:46px;white-space:nowrap}
+  .login-btn:hover{border-color:var(--blue);color:var(--blue)}
+  .login-btn .avatar{width:28px;height:28px;border-radius:50%;background:var(--grad-mart);color:#fff;display:grid;place-items:center;font-size:.82rem;font-weight:800;flex-shrink:0}
+  .login-btn.logged{background:linear-gradient(120deg,#CFE3FF,#A9C8FF);color:#0B2A6B;border-color:#A9C8FF}
+  .login-tabs{display:flex;gap:8px;margin-top:14px;background:var(--surface-2);border:1px solid var(--line);border-radius:12px;padding:5px}
+  .login-tabs button{flex:1;border:0;background:transparent;border-radius:9px;padding:10px;font-weight:800;color:var(--muted);min-height:44px}
+  .login-tabs button.active{background:var(--surface);color:var(--blue);box-shadow:0 4px 12px rgba(23,35,63,.10)}
+  .login-note{margin-top:12px;background:var(--blue-soft);border:1px solid var(--line-strong);border-radius:12px;padding:11px 13px;font-size:.86rem;font-weight:600;line-height:1.55;color:var(--ink-2)}
+  .login-order-note{margin-top:14px;background:linear-gradient(92deg,#FFE3C2,#FFC9DC);border:1px solid #FFB3CD;border-radius:12px;padding:12px 14px;font-size:.92rem;font-weight:700;line-height:1.55;color:#6E1E3C}
+  .account-box{margin-top:14px;background:var(--surface-2);border:1px solid var(--line);border-radius:16px;padding:16px;text-align:center}
+  .account-box .big-avatar{width:62px;height:62px;border-radius:50%;background:var(--grad-mart);color:#fff;display:grid;place-items:center;font-size:1.5rem;font-weight:800;margin:0 auto}
+  .account-box h4{font-size:1.12rem;font-weight:800;margin-top:10px}
+  .account-box p{color:var(--muted);font-weight:700;font-size:.9rem;margin-top:3px}
+  .logout-btn{margin-top:14px;width:100%;background:var(--surface);color:#C93312;border:1.5px solid #C93312;border-radius:12px;padding:12px;font-weight:800;min-height:48px}
+  .logout-btn:hover{background:#FDECEA}
+  @media (max-width:600px){ .login-btn{padding:0 10px;font-size:.85rem} .login-btn .login-label{max-width:74px;overflow:hidden;text-overflow:ellipsis} }
   .orders-list{display:flex;flex-direction:column;gap:14px;margin-top:14px}
   .order-card{border:1px solid var(--line-strong);border-radius:16px;padding:14px;background:var(--surface-2)}
   .order-card.cancelled{opacity:.72}
@@ -453,6 +470,10 @@
       <a href="#orders" id="navOrders">My Orders</a>
     </nav>
     <div class="header-actions">
+      <button class="login-btn" id="loginBtn" aria-label="Login karo">
+        <svg width="19" height="19" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21c0-4 3.6-6.5 8-6.5s8 2.5 8 6.5"/></svg>
+        <span class="login-label" id="loginLabel">Login</span>
+      </button>
       <button class="icon-btn" id="ordersBtn" aria-label="My Orders kholo">
         <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9" stroke-linecap="round" stroke-linejoin="round"><path d="M21 8l-9-5-9 5v8l9 5 9-5z"/><path d="M3 8l9 5 9-5"/><path d="M12 13v8"/></svg>
         <span class="orders-count hidden" id="ordersCount">0</span>
@@ -689,6 +710,7 @@
         <h4>Madad</h4>
         <ul>
           <li><a href="#order">Order kaise karein</a></li>
+          <li><a href="#login" class="login-link">Login / Mera Account</a></li>
           <li><a href="#orders" class="orders-link">My Orders — mere orders dekho</a></li>
           <li><a href="#shop">Saara saaman dekho</a></li>
           <li><a href="#top">Upar jao ↑</a></li>
@@ -856,6 +878,65 @@
       </button>
     </div>
     <div class="orders-list" id="ordersList"></div>
+  </div>
+</div>
+
+<!-- LOGIN -->
+<div class="modal" id="loginModal" role="dialog" aria-modal="true" aria-labelledby="loginTitle">
+  <div class="modal-back" id="loginBack"></div>
+  <div class="modal-card">
+    <div class="modal-head">
+      <div>
+        <h3 class="display" id="loginTitle">Login 👤</h3>
+        <p id="loginSub">Apne mobile number aur 4-digit PIN se login karo. Account nahi hai? Upar 'Naya Account' wala tab dabao.</p>
+      </div>
+      <button class="icon-btn" id="loginClose" aria-label="Band karo">
+        <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M6 6l12 12M18 6L6 18"/></svg>
+      </button>
+    </div>
+
+    <div class="login-order-note" id="loginOrderNote" style="display:none">🔒 <b>Order karne ke liye pehle login karo.</b> Bina account ke order nahi hoga. Login karte hi tumhara address form apne aap khul jayega — naam aur phone number pehle se bhare milenge, Buy Now dobara dabane ki zaroorat nahi!</div>
+
+    <div id="loginFormWrap">
+      <div class="login-tabs" role="tablist" aria-label="Login ya naya account">
+        <button type="button" id="tabLogin" class="active">Login Karo</button>
+        <button type="button" id="tabSignup">Naya Account</button>
+      </div>
+      <form id="loginForm" novalidate>
+        <div class="field" id="lfNameWrap">
+          <label for="loginName">Aapka Naam *</label>
+          <input id="loginName" type="text" autocomplete="name" placeholder="Jaise: Rahul Kumar" />
+          <p class="err">Naam bharna zaroori hai (kam se kam 2 akshar).</p>
+        </div>
+        <div class="field" id="lfPhone">
+          <label for="loginPhone">Mobile Number *</label>
+          <input id="loginPhone" type="tel" inputmode="numeric" autocomplete="tel" placeholder="10 digit mobile number" />
+          <p class="err">Sahi 10-digit mobile number daalo.</p>
+        </div>
+        <div class="field" id="lfPin">
+          <label for="loginPin">4-Digit PIN *</label>
+          <input id="loginPin" type="password" inputmode="numeric" autocomplete="current-password" maxlength="4" placeholder="Apna 4-digit PIN — jaise 1234" />
+          <p class="err" id="loginPinErr">4-digit PIN daalo — sirf number, 4 ank.</p>
+        </div>
+        <div class="form-actions">
+          <button type="submit" class="buy-btn" id="loginSubmitBtn">Login Karo →</button>
+        </div>
+      </form>
+      <div class="login-note">ℹ️ Ye login sirf <b>isi phone / browser</b> par kaam karta hai — tumhara naam, number, order wala pata aur orders yahin save rehte hain, bilkul My Orders ki tarah. Dusre phone par login karne ke liye wahan naya account banana hoga. PIN kisi ko mat batana!</div>
+    </div>
+
+    <div id="accountWrap" style="display:none">
+      <div class="account-box">
+        <span class="big-avatar" id="accAvatar">?</span>
+        <h4 id="accName">—</h4>
+        <p id="accPhone">—</p>
+        <span class="pay-claimed">✅ Login ho gaya hai</span>
+      </div>
+      <p style="font-size:.9rem;font-weight:600;color:var(--ink-2);margin-top:12px;line-height:1.55">Ab Buy Now dabane par tumhara naam aur phone number address form mein <b>pehle se bhara</b> milega. Aur ek baar order complete karne ke baad tumhara <b>poora pata, PIN code aur landmark</b> bhi is account ke saath save ho jayega — agli baar wo bhi pehle se bhara milega, badalna ho to wahin badal sakte ho!</p>
+      <button class="btn btn-primary" id="accOrdersBtn" style="width:100%;margin-top:14px">📦 My Orders Dekho</button>
+      <button class="logout-btn" id="logoutBtn">Logout Karo</button>
+      <p style="font-size:.8rem;color:var(--muted);font-weight:600;margin-top:10px;text-align:center">Logout karne se account delete nahi hota — isi phone par PIN se phir login ho jayega.</p>
+    </div>
   </div>
 </div>
 
@@ -1341,12 +1422,20 @@ document.getElementById("sortSel").addEventListener("change", function(e){
 document.getElementById("cartBtn").addEventListener("click", openDrawer);
 document.getElementById("closeDrawer").addEventListener("click", closeDrawer);
 document.getElementById("overlay").addEventListener("click", closeDrawer);
-document.addEventListener("keydown", function(e){ if(e.key==="Escape"){ closeDrawer(); closeBuy(); closeOrders(); } });
+document.addEventListener("keydown", function(e){ if(e.key==="Escape"){ closeDrawer(); closeBuy(); closeOrders(); closeLogin(); } });
 
 /* ---------- Buy Now — address form ---------- */
 function openBuy(){
   var t = cartTotals();
   if(t.count===0){ toast("Pehle cart mein kuch daalo!"); return; }
+  /* Bina login ke order nahi — pehle login popup kholo, login hote hi order yahin se aage badhega */
+  var cuGate = (typeof currentUser === "function") ? currentUser() : null;
+  if(!cuGate){
+    pendingOrderAfterLogin = true;
+    closeDrawer();
+    openLogin();
+    return;
+  }
   closeDrawer();
   var rows = Object.keys(cart).map(function(id){
     var p = PRODUCTS.find(function(x){return x.id==id;});
@@ -1358,6 +1447,23 @@ function openBuy(){
   document.getElementById("buyPaymentWrap").style.display = "none";
   document.getElementById("buyDone").style.display = "none";
   document.getElementById("buyModal").classList.add("open");
+  /* Login kiya hai to naam + phone pehle se bhar do */
+  var cu = (typeof currentUser === "function") ? currentUser() : null;
+  if(cu){
+    var cn = document.getElementById("custName");
+    var cp = document.getElementById("custPhone");
+    if(cn && !cn.value.trim()) cn.value = cu.name;
+    if(cp && !cp.value.trim()) cp.value = cu.phone;
+    /* Is account ke saath save hua pata (poora pata, PIN code, landmark) pehle se bhar do.
+       Save pata na ho to address wale box khaali rakho — taaki kisi dusre account ka pata kabhi na dikhe. */
+    var sa = cu.savedAddr || null;
+    var ca = document.getElementById("custAddr");
+    var cpin = document.getElementById("custPin");
+    var cl = document.getElementById("custLandmark");
+    if(ca) ca.value = sa ? (sa.addr || "") : "";
+    if(cpin) cpin.value = sa ? (sa.pin || "") : "";
+    if(cl) cl.value = sa ? (sa.landmark || "") : "";
+  }
   var mc = document.querySelector("#buyModal .modal-card");
   if(mc) mc.scrollTop = 0;
 }
@@ -1637,6 +1743,11 @@ document.getElementById("payConfirmBtn").addEventListener("click", function(){
   savedOrders.unshift(lastPlacedOrder);
   saveOrders(savedOrders);
   updateOrdersBadge();
+  /* Order complete — login hai to ye pata (poora pata, PIN code, landmark) is account ke saath save kar do,
+     taaki agli baar Buy Now par address form pehle se bhara mile. Bina login ke kuch save nahi hota. */
+  if(typeof saveAddressToAccount === "function"){
+    saveAddressToAccount({addr:pendingOrder.addr, pin:pendingOrder.pin, landmark:pendingOrder.landmark});
+  }
   document.getElementById("buyWaBtn").href = waLinkForOrder(lastPlacedOrder);
   document.getElementById("buyDoneText").textContent = lastOrderText;
   document.getElementById("buyDonePay").textContent = mode==="cod"
@@ -1794,6 +1905,9 @@ document.getElementById("navOrders").addEventListener("click", function(e){ e.pr
 document.querySelectorAll(".orders-link").forEach(function(a){
   a.addEventListener("click", function(e){ e.preventDefault(); openOrders(); });
 });
+document.querySelectorAll(".login-link").forEach(function(a){
+  a.addEventListener("click", function(e){ e.preventDefault(); openLogin(); });
+});
 document.getElementById("buyDoneOrders").addEventListener("click", function(){
   closeBuy();
   openOrders();
@@ -1818,6 +1932,197 @@ document.getElementById("ordersList").addEventListener("click", function(e){
     toast("Order cancel ho gaya — Cancelled ❌");
   }
 });
+
+/* ---------- Login — account isi phone/browser mein save hota hai (My Orders ki tarah) ---------- */
+var ACCOUNTS_KEY = "drlmart_accounts_v1";
+var SESSION_KEY = "drlmart_session_v1";
+var loginMode = "login"; /* "login" ya "signup" */
+var pendingOrderAfterLogin = false; /* Buy Now se login khula hai — login hote hi seedha address form khulega */
+
+function loadAccounts(){
+  try{
+    var raw = localStorage.getItem(ACCOUNTS_KEY);
+    var arr = raw ? JSON.parse(raw) : [];
+    return Array.isArray(arr) ? arr : [];
+  }catch(e){ return []; }
+}
+function saveAccounts(list){
+  try{ localStorage.setItem(ACCOUNTS_KEY, JSON.stringify(list)); }catch(e){}
+}
+function pinHash(pin){
+  /* Halka sa hash — PIN seedha text mein save nahi hota */
+  var h = 0;
+  var s = "drl" + pin + "mart";
+  for(var i=0;i<s.length;i++){ h = ((h<<5) - h + s.charCodeAt(i)) | 0; }
+  return "h" + h;
+}
+function currentUser(){
+  try{
+    var phone = localStorage.getItem(SESSION_KEY);
+    if(!phone) return null;
+    var accs = loadAccounts();
+    for(var i=0;i<accs.length;i++){ if(accs[i].phone===phone) return accs[i]; }
+    return null;
+  }catch(e){ return null; }
+}
+function setSession(phone){
+  try{
+    if(phone) localStorage.setItem(SESSION_KEY, phone);
+    else localStorage.removeItem(SESSION_KEY);
+  }catch(e){}
+}
+/* Order complete hone par pata (poora pata, PIN code, landmark) login wale account ke saath save karo.
+   Bina login ke kuch save nahi hota; pata sirf usi account ke record mein rehta hai, dusre account ko kabhi nahi dikhta. */
+function saveAddressToAccount(addrObj){
+  var u = currentUser();
+  if(!u || !addrObj) return;
+  var accs = loadAccounts();
+  for(var i=0;i<accs.length;i++){
+    if(accs[i].phone===u.phone){
+      accs[i].savedAddr = {addr:addrObj.addr || "", pin:addrObj.pin || "", landmark:addrObj.landmark || ""};
+      break;
+    }
+  }
+  saveAccounts(accs);
+}
+function firstNameOf(name){
+  return (name || "").trim().split(/\s+/)[0] || "Dost";
+}
+function updateLoginUI(){
+  var u = currentUser();
+  var btn = document.getElementById("loginBtn");
+  var lbl = document.getElementById("loginLabel");
+  if(!btn || !lbl) return;
+  if(u){
+    lbl.textContent = "Hi, " + firstNameOf(u.name);
+    btn.classList.add("logged");
+    btn.setAttribute("aria-label", "Mera account — " + u.name);
+  } else {
+    lbl.textContent = "Login";
+    btn.classList.remove("logged");
+    btn.setAttribute("aria-label", "Login karo");
+  }
+}
+function setLoginMode(mode){
+  loginMode = mode;
+  document.getElementById("tabLogin").classList.toggle("active", mode==="login");
+  document.getElementById("tabSignup").classList.toggle("active", mode==="signup");
+  document.getElementById("lfNameWrap").style.display = mode==="signup" ? "block" : "none";
+  document.getElementById("loginSubmitBtn").textContent = mode==="signup" ? "Account Banao →" : "Login Karo →";
+  document.getElementById("loginTitle").textContent = mode==="signup" ? "Naya Account 📝" : "Login 👤";
+  document.getElementById("loginSub").textContent = mode==="signup"
+    ? "Apna naam, mobile number aur ek 4-digit PIN set karo — bas, account ban jayega! Isi number aur PIN se aage login hoga."
+    : "Apne mobile number aur 4-digit PIN se login karo. Account nahi hai? Upar 'Naya Account' wala tab dabao.";
+  document.getElementById("loginPin").setAttribute("autocomplete", mode==="signup" ? "new-password" : "current-password");
+}
+function openLogin(){
+  var u = currentUser();
+  if(u){
+    document.getElementById("loginFormWrap").style.display = "none";
+    document.getElementById("accountWrap").style.display = "block";
+    document.getElementById("loginTitle").textContent = "Mera Account 👤";
+    document.getElementById("loginSub").textContent = "Tum login ho — yahan se apne orders dekho ya logout karo.";
+    document.getElementById("accAvatar").textContent = firstNameOf(u.name).charAt(0).toUpperCase();
+    document.getElementById("accName").textContent = u.name;
+    document.getElementById("accPhone").textContent = "📱 " + u.phone;
+  } else {
+    document.getElementById("loginFormWrap").style.display = "block";
+    document.getElementById("accountWrap").style.display = "none";
+    setLoginMode("login");
+  }
+  var orderNote = document.getElementById("loginOrderNote");
+  if(orderNote) orderNote.style.display = (!u && pendingOrderAfterLogin) ? "block" : "none";
+  document.getElementById("loginModal").classList.add("open");
+  var mc = document.querySelector("#loginModal .modal-card");
+  if(mc) mc.scrollTop = 0;
+}
+function closeLogin(){
+  pendingOrderAfterLogin = false;
+  var orderNote = document.getElementById("loginOrderNote");
+  if(orderNote) orderNote.style.display = "none";
+  var m = document.getElementById("loginModal");
+  if(m) m.classList.remove("open");
+}
+document.getElementById("loginBtn").addEventListener("click", openLogin);
+document.getElementById("loginClose").addEventListener("click", closeLogin);
+document.getElementById("loginBack").addEventListener("click", closeLogin);
+document.getElementById("tabLogin").addEventListener("click", function(){ setLoginMode("login"); });
+document.getElementById("tabSignup").addEventListener("click", function(){ setLoginMode("signup"); });
+["loginName","loginPhone","loginPin"].forEach(function(fid){
+  document.getElementById(fid).addEventListener("input", function(){
+    var f = this.closest(".field");
+    if(f) f.classList.remove("invalid");
+  });
+});
+document.getElementById("loginForm").addEventListener("submit", function(e){
+  e.preventDefault();
+  var name = document.getElementById("loginName").value.trim();
+  var phone = document.getElementById("loginPhone").value.replace(/\D/g,"");
+  if(phone.length===12 && phone.indexOf("91")===0) phone = phone.slice(2);
+  if(phone.length===11 && phone.charAt(0)==="0") phone = phone.slice(1);
+  var pin = document.getElementById("loginPin").value.replace(/\D/g,"");
+  var okPhone = /^[6-9]\d{9}$/.test(phone);
+  var okPin = /^\d{4}$/.test(pin);
+  var okName = loginMode!=="signup" || name.length>=2;
+  document.getElementById("lfPhone").classList.toggle("invalid", !okPhone);
+  document.getElementById("lfPin").classList.toggle("invalid", !okPin);
+  document.getElementById("lfNameWrap").classList.toggle("invalid", !okName);
+  document.getElementById("loginPinErr").textContent = "4-digit PIN daalo — sirf number, 4 ank.";
+  if(!(okPhone && okPin && okName)){
+    toast("Details check karo — laal wale hisse sahi karo");
+    return;
+  }
+  var accs = loadAccounts();
+  var found = null;
+  for(var i=0;i<accs.length;i++){ if(accs[i].phone===phone) found = accs[i]; }
+  if(loginMode==="signup"){
+    if(found){
+      document.getElementById("lfPhone").classList.add("invalid");
+      toast("Is number se account pehle se hai — Login wale tab se login karo");
+      setLoginMode("login");
+      return;
+    }
+    var nu = {name:name, phone:phone, pin:pinHash(pin), createdAt:Date.now()};
+    accs.push(nu);
+    saveAccounts(accs);
+    setSession(phone);
+    updateLoginUI();
+    var resumeSignup = pendingOrderAfterLogin;
+    closeLogin();
+    toast("🎉 Account ban gaya! Welcome, " + firstNameOf(name) + "!");
+    if(resumeSignup) openBuy();
+    return;
+  }
+  /* Login mode */
+  if(!found){
+    document.getElementById("lfPhone").classList.add("invalid");
+    toast("Is number se koi account nahi mila — pehle 'Naya Account' se account banao");
+    return;
+  }
+  if(found.pin !== pinHash(pin)){
+    document.getElementById("lfPin").classList.add("invalid");
+    document.getElementById("loginPinErr").textContent = "Galat PIN hai — sahi 4-digit PIN daalo.";
+    toast("❌ Galat PIN — phir try karo");
+    return;
+  }
+  setSession(phone);
+  updateLoginUI();
+  var resumeLogin = pendingOrderAfterLogin;
+  closeLogin();
+  toast("👋 Welcome back, " + firstNameOf(found.name) + "! Login ho gaya.");
+  if(resumeLogin) openBuy();
+});
+document.getElementById("logoutBtn").addEventListener("click", function(){
+  setSession(null);
+  updateLoginUI();
+  closeLogin();
+  toast("Logout ho gaya — phir milenge! 👋");
+});
+document.getElementById("accOrdersBtn").addEventListener("click", function(){
+  closeLogin();
+  openOrders();
+});
+updateLoginUI();
 
 /* ---------- Upar wala bar — scroll down par hide, scroll up par show ---------- */
 (function(){
@@ -1867,22 +2172,12 @@ updateOrdersBadge();
     btn.style.display = "none";
     return;
   }
-  var deferredPrompt = null;
-  window.addEventListener("beforeinstallprompt", function(e){
-    e.preventDefault();
-    deferredPrompt = e;
-  });
   window.addEventListener("appinstalled", function(){
     btn.style.display = "none";
     if(steps) steps.classList.remove("open");
   });
   btn.addEventListener("click", function(){
-    if(deferredPrompt){
-      deferredPrompt.prompt();
-      deferredPrompt.userChoice.then(function(){ deferredPrompt = null; });
-    } else if(steps){
-      steps.classList.toggle("open");
-    }
+    if(steps) steps.classList.toggle("open");
   });
 })();
 </script>
